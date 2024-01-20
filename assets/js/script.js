@@ -10,7 +10,9 @@ let businessHours = [
   { id: "14", displayTime: "2pm"}, 
   { id: "15", displayTime: "3pm"}, 
   { id: "16", displayTime: "4pm"}, 
-  { id: "17", displayTime: "5pm"}
+  { id: "17", displayTime: "5pm"},
+  { id: "18", displayTime: "6pm"},
+  { id: "19", displayTime: "7pm"}
 ]   
 
 
@@ -30,26 +32,25 @@ dateEl.text(dayWeek + ", " + currentMonth + " " + currentDay);
 
 
 for (var i = 0; i < businessHours.length; i++) {
-  //var $time = businessHours[i].displayTime;
+  var $time = businessHours[i].displayTime;
 
   // Add new div with class: row
   var $row = $("<div>").addClass("row");
 
   // Add new div with class: col-md-1 time-block
-  var $timeBlock = $("<div>").addClass("col-md-1 time-block time-block").attr("id", businessHours[i].id);  
+  //var $timeBlock = $("<div>").addClass("col-md-1 time-block time-block").attr("id", businessHours[i].id);  
+  var $timeBlock = $("<div>").addClass("col-md-1 time-block time-block");   
   $timeBlock.append("<p>" + businessHours[i].displayTime + "</p>");
 
+  // var $textareaContainer = $("<div>").addClass("col-md-10");
+  // $textareaContainer.append($("<textarea>").attr({ id: $time, rows: 2, cols: 100 }));
 
-  // Add new div with class: col-md-10
-  //var backcolorTextArea = "gray-background";
-  //var $textareaContainer = $("<textarea>").addClass("col-md-10 border-top-blank " + backcolorTextArea );
-  var $textareaContainer = $("<textarea>").addClass("col-md-10 border-top-blank ");
-
+  var $textareaContainer = $("<textarea>").addClass("col-md-10").attr({ id: $time, rows: 2, cols: 100 });
   //$textareaContainer.append($("<textarea>").attr({ id: $time, rows: 2, cols: 100 }));
 
   var $saveButton = $("<div>")
     .addClass("col-md-1 saveBtn center-container")
-    .attr("id", businessHours[i].id)
+    .attr("id", $time)
     .append("<i class='fas fa-save'></i>")
     .on("click", saveButtonClick);
 
