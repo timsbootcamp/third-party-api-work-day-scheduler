@@ -27,9 +27,9 @@ for (var i = 0; i < businessHours.length; i++) {
 
   // Add new div with class: col-md-10
   var backcolorTextArea = "gray-background";
-  var $textareaContainer = $("<div>").addClass("col-md-10 border-top-blank " + backcolorTextArea );
+  var $textareaContainer = $("<textarea>").addClass("col-md-10 border-top-blank " + backcolorTextArea );
   var $time = businessHours[i];
-  $textareaContainer.append($("<textarea>").attr({ id: $time, rows: 2, cols: 100 }));
+  //$textareaContainer.append($("<textarea>").attr({ id: $time, rows: 2, cols: 100 }));
 
   var $saveButton = $("<div>")
     .addClass("col-md-1 saveBtn center-container")

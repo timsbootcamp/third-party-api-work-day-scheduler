@@ -103,3 +103,11 @@ header {
   align-items: center; 
   justify-content: center; 
 }
+
+textarea {
+  /* border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; */
+  outline-color: blue;
+}
