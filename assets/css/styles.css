@@ -92,3 +92,8 @@ header {
 .border-top-timeblock {
   border-top: 1px dashed black; 
 }
+
+
+.time-block-container {
+  margin-top: 1px;
+}
