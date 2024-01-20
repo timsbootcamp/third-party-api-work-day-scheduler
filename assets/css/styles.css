@@ -70,3 +70,25 @@ header {
   font-size: 20px;
   transition: all 0.3s ease-in-out;
 }
+
+
+/* TO DELETE */
+.gray-background {
+  background-color: #f0f0f0; /* Replace with your desired gray color code */
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.border-top-blank {
+  border-top: 2px solid white; 
+}
+
+
+.border-top-timeblock {
+  border-top: 1px dashed black; 
+}
