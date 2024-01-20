@@ -97,3 +97,9 @@ header {
 .time-block-container {
   margin-top: 1px;
 }
+
+.time-block {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+}

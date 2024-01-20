@@ -22,7 +22,7 @@ for (var i = 0; i < businessHours.length; i++) {
   var $row = $("<div>").addClass("row");
 
   // Add new div with class: col-md-1 time-block
-  var $timeBlock = $("<div>").addClass("col-md-1 time-block");
+  var $timeBlock = $("<div>").addClass("col-md-1 time-block time-block");
   $timeBlock.append("<p>" + businessHours[i] + "</p>");
 
   // Add new div with class: col-md-10
