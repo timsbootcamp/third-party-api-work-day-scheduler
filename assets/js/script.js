@@ -71,6 +71,9 @@ for (var i = 0; i < businessHours.length; i++) {
 }
 
 
+displayTimeBlockColors();
+
+
 
 
 // Event trigerred when user clicks on saveButton
@@ -81,21 +84,22 @@ function saveButtonClick() {
 }
 
 
-var timeBlock = $(".time-block");
-const currentHour = today.hour();
+function displayTimeBlockColors() {
 
-var textAreas_dataEntry = $(".col-md-10");
+  // var timeBlock = $(".time-block");
+  const currentHour = today.hour();
 
-for (var i = 0; i < textAreas_dataEntry.length; i++) {
+  var textAreas_dataEntry = $(".col-md-10");
 
-  if (currentHour > businessHours[i].id) {
-    $(textAreas_dataEntry[i]).addClass("past");
+  for (var i = 0; i < textAreas_dataEntry.length; i++) {
+    if (currentHour > businessHours[i].id) {
+      $(textAreas_dataEntry[i]).addClass("past");
+    }
+    else if (currentHour == businessHours[i].id) {
+      $(textAreas_dataEntry[i]).addClass("present");
+    }
+    else {
+      $(textAreas_dataEntry[i]).addClass("future");
+    }
   }
-  else if (currentHour == businessHours[i].id) {
-    $(textAreas_dataEntry[i]).addClass("present");
-  }
-  else {
-    $(textAreas_dataEntry[i]).addClass("future");
-  }
-
 }
