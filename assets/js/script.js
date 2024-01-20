@@ -34,15 +34,17 @@ for (var i = 0; i < businessHours.length; i++) {
   var $saveButton = $("<div>")
     .addClass("col-md-1 saveBtn center-container")
     .attr("id", $time)
-    .append("<i class='fas fa-save'></i>");
+    .append("<i class='fas fa-save'></i>")
+    .on("click", saveButtonClick);
 
-
-  // Append all data into one variable
+  
+    // Append all data into one variable
   var $rowTimeLine = $row
     .append($('<div>').addClass('time-block-container')) // Add space at top
     .append($timeBlock)
     .append($textareaContainer)
     .append($saveButton);
+
 
   // Select an element with the ID "root-timeblock" from HTML and store in variable 'root'
   var root = $('#root-timeblock');
@@ -51,5 +53,13 @@ for (var i = 0; i < businessHours.length; i++) {
   root.append($rowTimeLine);
 }
 
+
+
+// Event trigerred when user clicks on saveButton
+function saveButtonClick() {
+  var $buttonId   = $(this).attr("id");
+  var $textEnteredbyUser = $("#" + $buttonId).val();
+  alert("Save clicked. " + $buttonId + " " + $textEnteredbyUser);
+}
 
 
