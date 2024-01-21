@@ -1,6 +1,6 @@
 const localStorage_WorkDaySched = "work-day-scheduler";
 
-let businessHours = [
+const businessHours = [
   {"id":"9am", "24hrTime":9},
   {"id":"10am", "24hrTime":10},
   {"id":"11am", "24hrTime":11},
@@ -12,27 +12,29 @@ let businessHours = [
   {"id":"5pm", "24hrTime":17},
 ]   
 
+
 let calendarData = [];
 
 
-const today=dayjs();
-const dayWeek = today.format("dddd"); // returns day of week (eg. 'Friday')
-const currentMonth = today.format('MMMM'); // eg. January
-const currentDay = today.format('D');  // eg. 19 (ie. day of month)
+// using Day.js get todays date in format dd/mm/yyyy - this format gets saved to local storage
+let todaysDate_ddmmyyyy = getTodaysDate_ddmmyyyy();
+
+// using this variable to initialise current hour and then we use timer
+// to check this variable if hour has changed then we call 'displayTimeBlockColors()' 
+let savedHour = "";
+
+
 
 
 // using Jquery get id of currentDay
 var dateEl = $("#currentDay");
-
-let todaysDate_ddmmyyyy = today.format("DD/MM/YYYY");
-
 
 
 // this is only run once the page Document Object Model (DOM) is ready for JavaScript code to execute
 $(document).ready(function() {
 
   // update date using dateEl via Jquery
-  dateEl.text(dayWeek + ", " + currentMonth + " " + currentDay);
+  dateEl.text(getDateForTopOfWebPage());
 
   
   for (var i = 0; i < businessHours.length; i++) {
@@ -78,13 +80,9 @@ $(document).ready(function() {
     root.append($rowTimeLine);
   }
 
-  
   readFromLocalStorage();
   displayTimeBlockColors();
-
 })
-
-
 
 
 
@@ -99,24 +97,32 @@ function saveButtonClick() {
 
 function displayTimeBlockColors() {
 
-  const currentHour = today.hour();
+  if (savedHour != getCurrentHour()) {
 
-  var textAreas_dataEntry = $(".col-md-10");
+    const currentHour = getCurrentHour();
 
-  for (var i = 0; i < textAreas_dataEntry.length; i++) {
-    
-    let busHour = parseInt(businessHours[i]["24hrTime"], 10)
-    
-    if (currentHour > busHour) {
-      $(textAreas_dataEntry[i]).addClass("past");
+    var textAreas_dataEntry = $(".col-md-10");
+  
+    for (var i = 0; i < textAreas_dataEntry.length; i++) {
+      
+      let busHour = parseInt(businessHours[i]["24hrTime"], 10)
+      
+      if (currentHour > busHour) {
+        $(textAreas_dataEntry[i]).addClass("past");
+      }
+      else if (currentHour == busHour) {
+        $(textAreas_dataEntry[i]).addClass("present");
+      }
+      else {
+        $(textAreas_dataEntry[i]).addClass("future");
+      }
     }
-    else if (currentHour == busHour) {
-      $(textAreas_dataEntry[i]).addClass("present");
-    }
-    else {
-      $(textAreas_dataEntry[i]).addClass("future");
-    }
+
+    savedHour = getCurrentHour();
   }
+
+  
+
 }
 
 
