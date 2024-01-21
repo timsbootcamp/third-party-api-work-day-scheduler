@@ -82,6 +82,10 @@ $(document).ready(function() {
 
   readFromLocalStorage();
   displayTimeBlockColors();
+  
+  // setup timer
+  var timer = setInterval(timerFunction, 10000);
+
 })
 
 
@@ -97,17 +101,25 @@ function saveButtonClick() {
 
 function displayTimeBlockColors() {
 
+  // Updating the colors first time it is called. 
+  // The function is then called every 5 minutes to see if hour has changed
+  // and if so the colours are updated
   if (savedHour != getCurrentHour()) {
+  
+    // Get current hour
+    let currentHour = getCurrentHour();
 
-    const currentHour = getCurrentHour();
-
+    // Get all time blocks   
     var textAreas_dataEntry = $(".col-md-10");
   
+    // Parse area of all time blocks
     for (var i = 0; i < textAreas_dataEntry.length; i++) {
       
+      // Get 24 hour time
       let busHour = parseInt(businessHours[i]["24hrTime"], 10)
       
-      if (currentHour > busHour) {
+      // Compare current hour with 24 hour time  
+      if (currentHour > busHour) { 
         $(textAreas_dataEntry[i]).addClass("past");
       }
       else if (currentHour == busHour) {
@@ -120,9 +132,6 @@ function displayTimeBlockColors() {
 
     savedHour = getCurrentHour();
   }
-
-  
-
 }
 
 
@@ -221,3 +230,7 @@ function clearWorkDayScheduler() {
   localStorage.removeItem(localStorage_WorkDaySched);
 }
 
+
+function timerFunction() {
+  displayTimeBlockColors(); 
+}
