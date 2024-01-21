@@ -28,7 +28,6 @@ header {
 
 .time-block {
   text-align: center;
-  border-radius: 15px;
 }
 
 .row {
@@ -72,11 +71,6 @@ header {
 }
 
 
-/* TO DELETE */
-.gray-background {
-  background-color: #f0f0f0; /* Replace with your desired gray color code */
-}
-
 .center-container {
   display: flex;
   justify-content: center;
@@ -85,7 +79,7 @@ header {
 
 
 .border-top-blank {
-  border-top: 2px solid white; 
+  border-top: 1px solid white; 
 }
 
 
@@ -95,7 +89,7 @@ header {
 
 
 .time-block-container {
-  margin-top: 1px;
+  margin-top: 5px;
 }
 
 .time-block {
@@ -105,9 +99,5 @@ header {
 }
 
 textarea {
-  /* border: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none; */
   outline-color: blue;
 }
