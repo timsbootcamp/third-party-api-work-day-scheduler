@@ -59,7 +59,9 @@ $(document).ready(function() {
     var $saveButton = $("<div>")
       .addClass("col-md-1 saveBtn center-container")
       .attr("_id", $time)
-      .append("<i class='fas fa-save'></i>")
+      //.append("<i class='fas fa-save'></i>")
+      //.append("<i id='saveIcon_" + $time + "' class='fas fa-save' onclick='changeColor()'></i>")
+      .append("<i id='saveIcon_" + $time + "' class='fas fa-save'></i>")
       .on("click", saveButtonClick);
 
     
@@ -83,9 +85,8 @@ $(document).ready(function() {
   readFromLocalStorage();
   displayTimeBlockColors();
   
-  // setup timer
-  var timer = setInterval(timerFunction, 10000);
-
+  // setup timer to call timerFunction every 5 minutes
+  var timer = setInterval(timerFuncEvery5Mins, 300000);
 })
 
 
@@ -96,7 +97,7 @@ function saveButtonClick() {
   var $textEnteredbyUser = $("#" + $buttonId).val();
 
   updateCalendarData($buttonId, $textEnteredbyUser);
-  changeColor($buttonId);
+  changeColor("#saveIcon_" + $buttonId);
 }
 
 
@@ -231,6 +232,25 @@ function clearWorkDayScheduler() {
   localStorage.removeItem(localStorage_WorkDaySched);
 }
 
+// This function is called every 5 minutes
+// I called it timerFuncEvery5Mins as we may want to put other functions here too !
+function timerFuncEvery5Mins() {
+  displayTimeBlockColors(); 
+}
 
 
+// This function is called by ChangeColor. It resets to white icon 
+function timerIconColor() {
+  clearInterval(timer_for_icon_save);
+  $(refer).css('color', 'white');
+  console.log("x");
+}
 
+
+// This function is activated when user clicks on save icon. It displays black icon
+function changeColor(timeInterval) {
+  refer = timeInterval;
+  $(refer).css('color', 'black');
+  // After 2 seconds it calls timerIconFunction
+   timer_for_icon_save = setInterval(timerIconColor, 200);
+}
