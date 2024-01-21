@@ -24,8 +24,6 @@ let todaysDate_ddmmyyyy = getTodaysDate_ddmmyyyy();
 let savedHour = "";
 
 
-
-
 // using Jquery get id of currentDay
 var dateEl = $("#currentDay");
 
@@ -45,8 +43,8 @@ $(document).ready(function() {
     var $row = $("<div>").addClass("row");
 
     // Add new div with class: col-md-1 time-block
-    var $timeBlock = $("<div>").addClass("col-md-1 time-block time-block");   
-    $timeBlock.append("<p>" + businessHours[i].id + "</p>");
+    var $timeBlock = $("<div>").addClass("col-md-1 time-block");   
+    $timeBlock.append("<p>" + businessHours[i].id + "</p>").addClass("hour");
    
     var $textareaContainer = $("<textarea>").addClass("col-md-10").attr({ id: $time, rows: 2, cols: 100, placeholder: "\u200b" });
 
