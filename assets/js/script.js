@@ -1,20 +1,22 @@
 const localStorage_WorkDaySched = "work-day-scheduler";
 
+
 const businessHours = [
-  {"id":"9am", "24hrTime":9},
-  {"id":"10am", "24hrTime":10},
-  {"id":"11am", "24hrTime":11},
-  {"id":"12pm", "24hrTime":12},
-  {"id":"1pm", "24hrTime":13},
-  {"id":"2pm", "24hrTime":14},
-  {"id":"3pm", "24hrTime":15},
-  {"id":"4pm", "24hrTime":16},
-  {"id":"5pm", "24hrTime":17},
+  {"id":"9AM", "24hrTime":9},
+  {"id":"10AM", "24hrTime":10},
+  {"id":"11AM", "24hrTime":11},
+  {"id":"12PM", "24hrTime":12},
+  {"id":"1PM", "24hrTime":13},
+  {"id":"2PM", "24hrTime":14},
+  {"id":"3PM", "24hrTime":15},
+  {"id":"4PM", "24hrTime":16},
+  {"id":"5PM", "24hrTime":17},
 ]   
 
 
 let calendarData = [];
-
+let timer_for_icon_save;
+let refer
 
 // using Day.js get todays date in format dd/mm/yyyy - this format gets saved to local storage
 let todaysDate_ddmmyyyy = getTodaysDate_ddmmyyyy();
@@ -63,8 +65,8 @@ $(document).ready(function() {
     
       // Append all data into one variable
     var $rowTimeLine =  $row
-      .append($('<div>').addClass('time-block-container')) // Add space at top
-      .append(label)
+      //.append($('<div>').addClass('time-block-container')) // Add space at top
+      //.append(label)
       .append($timeBlock)
       .append($textareaContainer)    
       .append($saveButton);
@@ -94,6 +96,7 @@ function saveButtonClick() {
   var $textEnteredbyUser = $("#" + $buttonId).val();
 
   updateCalendarData($buttonId, $textEnteredbyUser);
+  changeColor($buttonId);
 }
 
 
@@ -182,7 +185,7 @@ function initialiseCalendarStructure() {
 function readFromLocalStorage() {
 
   checkCalendarStructureForReset();
-
+  
   var storedData = localStorage.getItem(localStorage_WorkDaySched);
 
   if (storedData) {
@@ -229,6 +232,5 @@ function clearWorkDayScheduler() {
 }
 
 
-function timerFunction() {
-  displayTimeBlockColors(); 
-}
+
+

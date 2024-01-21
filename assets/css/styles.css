@@ -71,6 +71,7 @@ header {
 }
 
 
+/* centers save image */
 .center-container {
   display: flex;
   justify-content: center;
@@ -89,7 +90,8 @@ header {
 
 
 .time-block-container {
-  margin-top: 5px;
+  /* margin-top: 0px; */
+  margin: 0px;
 }
 
 .time-block {
@@ -101,3 +103,8 @@ header {
 textarea {
   outline-color: blue;
 }
+
+.hour p {
+  margin-bottom: 0;
+}
+
