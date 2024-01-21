@@ -78,30 +78,16 @@ header {
   align-items: center;
 }
 
-
-.border-top-blank {
-  border-top: 1px solid white; 
-}
-
-
-.border-top-timeblock {
-  border-top: 1px dashed black; 
-}
-
-
-.time-block-container {
-  /* margin-top: 0px; */
-  margin: 0px;
-}
-
+/* Time Block formatting */
 .time-block {
   display: flex;
   align-items: center; 
   justify-content: center; 
 }
 
+
 textarea {
-  outline-color: blue;
+  outline-color: #06aed5;;
 }
 
 .hour p {
