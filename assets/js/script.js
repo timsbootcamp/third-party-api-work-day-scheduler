@@ -1,20 +1,26 @@
-// Define Business Hours Array
-//let businessHours = ["9am", "10am", "11am", "12am", "1pm", "2pm", "3pm", "4pm", "5pm"];
+
+const localStorage_WorkDaySched = "work-day-scheduler";
+
 
 let businessHours = [
-  { id: "9", displayTime: "9am"}, 
-  { id: "10", displayTime: "10am"}, 
-  { id: "11", displayTime: "11am"}, 
-  { id: "12", displayTime: "12am"}, 
-  { id: "13", displayTime: "1pm"}, 
-  { id: "14", displayTime: "2pm"}, 
-  { id: "15", displayTime: "3pm"}, 
-  { id: "16", displayTime: "4pm"}, 
-  { id: "17", displayTime: "5pm"},
-  { id: "18", displayTime: "6pm"},
-  { id: "19", displayTime: "7pm"}
+   "9am", 
+   "10am", 
+   "11am", 
+   "12am", 
+   "1pm", 
+   "2pm", 
+   "3pm", 
+   "4pm", 
+   "5pm",
+   "6pm",
+   "7pm"
 ]   
 
+
+
+
+let calendarData = [];
+initialiseCalendarStructure();
 
 
 const today=dayjs();
@@ -30,23 +36,19 @@ dateEl.text(dayWeek + ", " + currentMonth + " " + currentDay);
 
 
 
-
 for (var i = 0; i < businessHours.length; i++) {
-  var $time = businessHours[i].displayTime;
+  //var $time = businessHours[i].displayTime;
+  var $time = businessHours[i];
 
   // Add new div with class: row
   var $row = $("<div>").addClass("row");
 
   // Add new div with class: col-md-1 time-block
-  //var $timeBlock = $("<div>").addClass("col-md-1 time-block time-block").attr("id", businessHours[i].id);  
   var $timeBlock = $("<div>").addClass("col-md-1 time-block time-block");   
-  $timeBlock.append("<p>" + businessHours[i].displayTime + "</p>");
+  $timeBlock.append("<p>" + businessHours[i] + "</p>");
 
-  // var $textareaContainer = $("<div>").addClass("col-md-10");
-  // $textareaContainer.append($("<textarea>").attr({ id: $time, rows: 2, cols: 100 }));
 
   var $textareaContainer = $("<textarea>").addClass("col-md-10").attr({ id: $time, rows: 2, cols: 100 });
-  //$textareaContainer.append($("<textarea>").attr({ id: $time, rows: 2, cols: 100 }));
 
   var $saveButton = $("<div>")
     .addClass("col-md-1 saveBtn center-container")
@@ -80,22 +82,21 @@ displayTimeBlockColors();
 function saveButtonClick() {
   var $buttonId   = $(this).attr("id");
   var $textEnteredbyUser = $("#" + $buttonId).val();
-  alert("Save clicked. " + $buttonId + " " + $textEnteredbyUser);
+  updateCalendarData("20/01/2024", $buttonId, $textEnteredbyUser);
 }
 
 
 function displayTimeBlockColors() {
 
-  // var timeBlock = $(".time-block");
   const currentHour = today.hour();
 
   var textAreas_dataEntry = $(".col-md-10");
 
   for (var i = 0; i < textAreas_dataEntry.length; i++) {
-    if (currentHour > businessHours[i].id) {
+    if (currentHour > businessHours[i]) {
       $(textAreas_dataEntry[i]).addClass("past");
     }
-    else if (currentHour == businessHours[i].id) {
+    else if (currentHour == businessHours[i]) {
       $(textAreas_dataEntry[i]).addClass("present");
     }
     else {
@@ -103,3 +104,66 @@ function displayTimeBlockColors() {
     }
   }
 }
+
+
+
+
+function initialiseCalendarStructure() {
+  let propertiesString = '{"date": "20/01/2024"';
+
+  for (let i = 0; i < businessHours.length; i++) {
+    propertiesString = propertiesString + ", "  + '"' + businessHours[i] + '"' + ':' + '"' + "" + '"';
+  }
+
+  propertiesString = propertiesString + "}";
+
+  const propertiesObject = JSON.parse(propertiesString);
+
+  // Adding the object to the array
+  calendarData.push(propertiesObject);
+}
+
+
+
+
+function readFromLocalStorage() {
+
+  var storedData = localStorage.getItem(localStorage_WorkDaySched);
+
+  if (storedData) {
+    // load data into array : calendarData 
+    // after constructing the JavaScript value or object described by the string
+    calendarData = JSON.parse(storedData);
+
+    for (var i = 0; i < businessHours.length; i++) {
+      let $data = calendarData[0][businessHours[i]]
+      $("#" + businessHours[i]).append($data);
+    }       
+  }
+}
+
+
+function writeToLocalStorage() {
+    
+  // Converts the calendarData array to the JSON notation that the value represents
+    var jsonCalendarData = JSON.stringify(calendarData);
+
+  // Write to localstorage on key
+  localStorage.setItem(localStorage_WorkDaySched, jsonCalendarData);    
+}
+
+
+function updateCalendarData(dateEvent, timeEvent, userData) {
+  let item = calendarData.find(element => element.date === dateEvent);
+  item[timeEvent] = userData;
+  writeToLocalStorage();
+}
+
+
+
+// this is only run once the page Document Object Model (DOM) is ready for JavaScript code to execute
+$(document).ready(function () {
+  readFromLocalStorage();
+})
+
+
