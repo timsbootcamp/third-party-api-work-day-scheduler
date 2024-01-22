@@ -54,6 +54,8 @@ Every 5 minutes, I check to see if the hour has changed and if so then I run the
 Also, I check to see if the day has changed and if so then the local storage is reset with a blank structure ready for new data to be
 added.
 
+Lastly, I even created a favi icon as well !
+
 I have pushed myself continually ensuring my work is of the highest quality. The code is readable and maintainable. 
 
 
