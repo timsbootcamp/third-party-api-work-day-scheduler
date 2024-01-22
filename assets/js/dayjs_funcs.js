@@ -1,7 +1,4 @@
-
-// using Jquery get id of currentDay
-var dateEl = $("#currentDay");
-
+//dayjs_funcs.js contains code related to date handling and also calls functions from day.js library
 
 
 // get date in format like 'Sunday, January 21'
@@ -21,10 +18,12 @@ function getTodaysDate_ddmmyyyy() {
   return dayjs().format("DD/MM/YYYY");
 }
 
+
 // using Day.js get current hour
 function getCurrentHour() {
   return dayjs().format('HH');
 }
+
 
 // Takes a parameter variable, 'day' and returns with the suffix ("st", "nd", "rd", or "th")
 function addDaySuffix(day) {
