@@ -96,3 +96,9 @@ textarea {
   margin-bottom: 0;
 }
 
+/* This fixes the issue of save icon being truncated on mobile device */
+@media only screen and (max-width: 600px) {
+  .row {
+    margin-bottom: 5px;
+  }
+}
