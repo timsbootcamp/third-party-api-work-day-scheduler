@@ -86,10 +86,12 @@ header {
 }
 
 
+/* Time Area - define outline colour */
 textarea {
   outline-color: #06aed5;;
 }
 
+/*  p elements inside of containers that have an .hour property. */
 .hour p {
   margin-bottom: 0;
 }

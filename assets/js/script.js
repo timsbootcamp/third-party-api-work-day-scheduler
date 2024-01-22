@@ -2,7 +2,7 @@
 const localStorage_WorkDaySched = "work-day-scheduler";
 
 
-// array of business hours
+// Array of business hours
 const businessHours = [
   { "id": "9AM", "24hrTime": 9 },
   { "id": "10AM", "24hrTime": 10 },
@@ -16,32 +16,35 @@ const businessHours = [
 ]
 
 
-// array of calendarData
+// Array of calendarData
 let calendarData = [];
 let timer_for_icon_save;
 let refer
 
-// using Day.js get todays date in format dd/mm/yyyy - this format gets saved to local storage
-let todaysDate_ddmmyyyy = getTodaysDate_ddmmyyyy();
 
-// using this variable to initialise current hour and then we use timer
-// to check this variable if hour has changed then we call 'displayTimeBlockColors()' 
+// Using this variable to initialise current hour and then we use timer
+// to check this variable if hour has changed then we call 'displayTimeBlockColours()' 
 let savedHour = "";
 
+// Today's date will be stored in this variable in format of dd/mm/yyyy
+let todaysDate_ddmmyyyy = "";
 
-// using Jquery get id of currentDay
-var dateEl = $("#currentDay");
 
-
-// this is only run once the page Document Object Model (DOM) is ready for JavaScript code to execute
+// Only run once, when the page Document Object Model (DOM) is ready for JavaScript code to execute
 $(document).ready(function () {
 
-  // update date using dateEl via Jquery
-  dateEl.text(getDateForTopOfWebPage());
+  // Using Day.js get todays date in format dd/mm/yyyy - this format gets saved to local storage
+  todaysDate_ddmmyyyy = getTodaysDate_ddmmyyyy();
+
+  // Using Jquery get id of currentDay
+  var $dateEl = $("#currentDay");
+
+  // Update date using dateEl via Jquery
+  $dateEl.text(getDateForTopOfWebPage());
 
 
   for (var i = 0; i < businessHours.length; i++) {
-    var $time = businessHours[i].id;
+    var time = businessHours[i].id;
 
     // Add new div with class: row
     var $row = $("<div>").addClass("row");
@@ -51,13 +54,13 @@ $(document).ready(function () {
     $timeBlock.append("<p>" + businessHours[i].id + "</p>").addClass("hour");
 
     // Add textarea code
-    var $textareaContainer = $("<textarea>").addClass("col-md-10").attr({ id: $time, placeholder: "\u200b" });
+    var $textareaContainer = $("<textarea>").addClass("col-md-10").attr({ id: time, placeholder: "\u200b" });
 
     // Create logic for Save button and store in variable
     var $saveButton = $("<div>")
       .addClass("col-md-1 saveBtn center-container")
-      .attr("_id", $time)
-      .append("<i id='saveIcon_" + $time + "' class='fas fa-save'></i>")
+      .attr("_id", time)
+      .append("<i id='saveIcon_" + time + "' class='fas fa-save'></i>")
       .on("click", saveButtonClick);
 
     // Append all data into one variable
@@ -67,10 +70,10 @@ $(document).ready(function () {
       .append($saveButton);
 
     // Select an element with the ID "root-timeblock" from HTML and store in variable 'root'
-    var root = $('#root-timeblock');
+    var $root = $('#root-timeblock');
 
     // Append contents of variable, "$rowTimeLine"to "root-timeblock" element.
-    root.append($rowTimeLine);
+    $root.append($rowTimeLine);
   }
 
   // Read data from local storage
@@ -79,7 +82,7 @@ $(document).ready(function () {
   // Display time block colours
   displayTimeBlockColours();
 
-  // setup timer to call timerFunction every 5 minutes
+  // Setup timer to call timerFunction every 5 minutes
   var timer = setInterval(timerFuncEvery5Mins, 300000);
 })
 
@@ -95,33 +98,33 @@ function saveButtonClick() {
 }
 
 
+// Updating the colors first time it is called. 
+// The function is then called every 5 minutes to see if hour has changed
+// and if so the colours are updated
 function displayTimeBlockColours() {
-  // Updating the colors first time it is called. 
-  // The function is then called every 5 minutes to see if hour has changed
-  // and if so the colours are updated
   if (savedHour != getCurrentHour()) {
 
     // Get current hour
     let currentHour = getCurrentHour();
 
     // Get all time blocks   
-    var textAreas_dataEntry = $(".col-md-10");
+    var $textAreas_dataEntry = $(".col-md-10");
 
     // Parse area of all time blocks
-    for (var i = 0; i < textAreas_dataEntry.length; i++) {
+    for (var i = 0; i < $textAreas_dataEntry.length; i++) {
 
       // Get 24 hour time
       let busHour = parseInt(businessHours[i]["24hrTime"], 10)
 
       // Compare current hour with 24 hour time  
       if (currentHour > busHour) {
-        $(textAreas_dataEntry[i]).addClass("past");
+        $($textAreas_dataEntry[i]).addClass("past");
       }
       else if (currentHour == busHour) {
-        $(textAreas_dataEntry[i]).addClass("present");
+        $($textAreas_dataEntry[i]).addClass("present");
       }
       else {
-        $(textAreas_dataEntry[i]).addClass("future");
+        $($textAreas_dataEntry[i]).addClass("future");
       }
     }
 
@@ -130,24 +133,24 @@ function displayTimeBlockColours() {
 }
 
 
+ // Check to see if Calendar structure needs to be reset if new day and then initialises
 function checkCalendarStructureForReset() {
 
-  // read from local storage
+  // Read from local storage
   var storedData = localStorage.getItem(localStorage_WorkDaySched);
 
   if (storedData) {
-    // compare today's date with last stored in local storage
+    // Compare today's date with last stored in local storage
     let calendarData = JSON.parse(storedData);
 
-    // if dates differ then clear it out ready for new day  
+    // If dates differ then clear it out ready for new day  
     if (calendarData[0].date != todaysDate_ddmmyyyy) {
-      // clear local storage
+      // Clear local storage
       clearWorkDayScheduler();
       initialiseCalendarStructure();
     }
   }
 }
-
 
 
 function initialiseCalendarStructure() {
@@ -172,30 +175,33 @@ function initialiseCalendarStructure() {
 }
 
 
-
-
+// Read calendar data from Local Storage
 function readFromLocalStorage() {
 
+  // Check to see if Calendar structure needs to be reset if new day
   checkCalendarStructureForReset();
 
   var storedData = localStorage.getItem(localStorage_WorkDaySched);
 
   if (storedData) {
-    // load data into array : calendarData 
+    // Load data into array : calendarData 
     // after constructing the JavaScript value or object described by the string
     calendarData = JSON.parse(storedData);
 
+    // Update textareas with data
     for (var i = 0; i < businessHours.length; i++) {
       let $data = calendarData[0][businessHours[i].id]
       $("#" + businessHours[i].id).append($data);
     }
   }
   else {
+    // Initialise structure as running first time
     initialiseCalendarStructure();
   }
 }
 
 
+// Write to Local Storage
 function writeToLocalStorage() {
 
   // Converts the calendarData array to the JSON notation that the value represents
@@ -208,11 +214,14 @@ function writeToLocalStorage() {
 
 function updateCalendarData(timeEvent, userData) {
 
+  // Check to see if Calendar structure needs to be reset or not
   checkCalendarStructureForReset();
 
+  // Update CalendarData array
   let item = calendarData.find(element => element.date === todaysDate_ddmmyyyy);
   item[timeEvent] = userData;
 
+  // Write to Local Storage
   writeToLocalStorage();
 }
 
@@ -226,7 +235,8 @@ function clearWorkDayScheduler() {
 // This function is called every 5 minutes
 // I called it timerFuncEvery5Mins as we may want to put other functions here too !
 function timerFuncEvery5Mins() {
-  displayTimeBlockColors();
+  checkCalendarStructureForReset();
+  displayTimeBlockColours();
 }
 
 
