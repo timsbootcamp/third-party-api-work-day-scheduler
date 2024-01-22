@@ -82,7 +82,7 @@ I have pushed myself continually ensuring my work is of the highest quality. The
 
 ## Installation
 
-The GitHub repository for my Web API : Code Quiz can be found at: https://github.com/timsbootcamp/third-party-api-work-day-scheduler
+The GitHub repository for my Third-Party APIs: Work Day Scheduler can be found at: https://github.com/timsbootcamp/third-party-api-work-day-scheduler
 
 The source code can be cloned from the above link. 
 
